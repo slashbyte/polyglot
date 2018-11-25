@@ -642,7 +642,37 @@ void xboard2uci_gui_step(char string[]) {
 			XB->depth_limit = TRUE;
 			XB->depth_max = atoi(Star[0]);
 
-		} else if (match(string,"setboard *")) {
+		} else if(match(string, "SKILL *")) { //slashbyte, set uci skill level
+				uci_send_option(Uci, "Skill Level", "%s", Star[0]);
+
+		}else if(match(string, "DUMP")) { //slashbyte //dump current board
+			int file, rank, sq;
+			int piece, c;
+			char fen[256];
+			char row[9];
+			char line[256];
+			
+			game_get_board(Game,board);
+			if(!board_to_fen(board,fen,256)) ASSERT(FALSE);
+			printf("POLYGLOT FEN: %s\n", fen);
+			printf("POLYGLOT *** CURRENT BOARD ***\n");
+			
+			for (rank = 7; rank >= 0; rank--) {
+				for (file = 0; file < 8; file++) {
+					sq = square_make(file,rank);
+					piece = board->square[sq];
+					c = (piece != Empty) ? piece_to_char(piece) : '-';
+					row[file]=c;
+				}
+				row[8]='\0';
+				snprintf(line,sizeof(line),"POLYGLOT %s\n",row);
+				line[sizeof(line)-1]='\0';
+				printf("%s", line);
+			}			
+			printf("POLYGLOT %s to play\n",(colour_is_black(board->turn))?"black":"white");
+			printf("POLYGLOT\n");	
+
+		}else if (match(string,"setboard *")) {
 
 			my_log("POLYGLOT FEN %s\n",Star[0]);
 
@@ -1186,6 +1216,12 @@ static void board_update() {
    case DRAW_REPETITION:
       gui_send(GUI,"1/2-1/2 {Draw by repetition}");
       break;
+   case BLACK_CHECK: //slashbyte
+	  gui_send(GUI, "Black in check"); // check state added
+	  break;
+   case WHITE_CHECK: //slashbyte
+	  gui_send(GUI, "White in check"); //check state added
+	  break;
    default:
       ASSERT(FALSE);
       break;
@@ -1563,7 +1599,10 @@ static bool active() {
 
    // position state
 
-   if (game_status(Game) != PLAYING) return FALSE; // game ended
+   //if (game_status(Game) != PLAYING) return FALSE; // game ended
+   int a = game_status(Game);
+   if((a != PLAYING) && (a != BLACK_CHECK) && (a != WHITE_CHECK)) //slashbyte
+	   return FALSE;
 
    // xboard state
 

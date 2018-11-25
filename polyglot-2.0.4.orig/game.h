@@ -23,7 +23,9 @@ typedef enum {
    STALEMATE,
    DRAW_MATERIAL,
    DRAW_FIFTY,
-   DRAW_REPETITION
+   DRAW_REPETITION,
+   BLACK_CHECK, //slashbyte
+   WHITE_CHECK //slashbyte
 } status_t;
 
 // types

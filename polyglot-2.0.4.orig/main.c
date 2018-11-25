@@ -233,7 +233,7 @@ static void write_ini(const char *filename,
 void welcome_message(char *buf){
     if(!DEBUG){
         sprintf(buf,
-                "PolyGlot %s by Fabien Letouzey.\n",
+                "PolyGlot %s by Fabien Letouzey (Slash/Byte broke this!).\n",
                 Version);
     }else{
         sprintf(buf,

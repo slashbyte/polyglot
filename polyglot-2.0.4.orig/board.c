@@ -479,7 +479,7 @@ void board_disp(const board_t * board) {
    char fen[256];
    char row[9];
    char line[256];
-
+   
    ASSERT(board!=NULL);
 
    if (!board_to_fen(board,fen,256)) ASSERT(FALSE);

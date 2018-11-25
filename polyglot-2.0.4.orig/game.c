@@ -354,6 +354,19 @@ static int game_comp_status(const game_t * game) {
       }
    }
 
+   // check, slashbyte hack!
+  
+   if(board_can_play(board)) //totally not xboard-compatible
+   {
+	   if(FALSE) {
+	   } else if(is_in_check(board, Black)) { //black in check
+			return BLACK_CHECK;
+	   } else if(is_in_check(board, White)) { //white in check
+			return WHITE_CHECK;
+	   }
+   }
+   
+   
    return PLAYING;
 }
 

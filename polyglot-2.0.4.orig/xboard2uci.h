@@ -17,6 +17,7 @@ extern void xboard2uci_gui_step       (char string[]);
 extern void xboard2uci_engine_step    (char string[]);
 extern void xboard2uci_send_options   ();
 
+extern int  piece_to_char   (int piece); //slashbyte, compiler warning fix
 
 #endif // !defined XBOARD2UCI_H
 
