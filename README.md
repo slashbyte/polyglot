@@ -1,5 +1,5 @@
 # polyglot 2.0.4-1
-modded for stuff
+modded for "Chess Challenger"
 
 ```
 git clone https://github.com/slashbyte/polyglot.git
