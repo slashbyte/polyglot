@@ -645,18 +645,18 @@ void xboard2uci_gui_step(char string[]) {
 		} else if(match(string, "SKILL *")) { //slashbyte, set uci skill level
 				uci_send_option(Uci, "Skill Level", "%s", Star[0]);
 
-		}else if(match(string, "DUMP")) { //slashbyte //dump current board
-			int file, rank, sq;
-			int piece, c;
+		}else if(match(string, "FEN")) { //slashbyte, dump fen string
 			char fen[256];
-			char row[9];
-			char line[256];
-			
 			game_get_board(Game,board);
 			if(!board_to_fen(board,fen,256)) ASSERT(FALSE);
 			printf("POLYGLOT FEN: %s\n", fen);
+		}else if(match(string, "BOARD")) { //slashbyte, current dump board
+			int file, rank, sq;
+			int piece, c;
+			char row[9];
+			char line[256];			
 			printf("POLYGLOT *** CURRENT BOARD ***\n");
-			
+			game_get_board(Game,board);
 			for (rank = 7; rank >= 0; rank--) {
 				for (file = 0; file < 8; file++) {
 					sq = square_make(file,rank);
@@ -670,8 +670,7 @@ void xboard2uci_gui_step(char string[]) {
 				printf("%s", line);
 			}			
 			printf("POLYGLOT %s to play\n",(colour_is_black(board->turn))?"black":"white");
-			printf("POLYGLOT\n");	
-
+			printf("POLYGLOT\n");			
 		}else if (match(string,"setboard *")) {
 
 			my_log("POLYGLOT FEN %s\n",Star[0]);
