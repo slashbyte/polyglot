@@ -2,7 +2,7 @@
 modded for stuff
 
 ```
-git https://github.com/slashbyte/polyglot.git
+git clone https://github.com/slashbyte/polyglot.git
 chmod u+x configure
 ./configure
 make
